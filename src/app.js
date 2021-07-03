@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import RoutesUsers from "./routes/users.routes";
 
 //--- Setings ---
 //Crear servidor con express
@@ -21,9 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //--- Routs ---
-app.get("/", (req,res) => {
-    res.json({ message: "Bienvenido a la API" });
+app.get("/", (req, res) => {
+    res.json({ message: "Bienvenido a la API de store" });
 });
-
+//Rutas de usuarios
+app.use("/api/v1/users", RoutesUsers);
 
 export default app;
