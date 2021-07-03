@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import RoutesUsers from "./routes/users.routes";
-
+import RoutesProducts from "./routes/products.routes";
 //--- Setings ---
 //Crear servidor con express
 const app = express();
@@ -27,5 +27,7 @@ app.get("/", (req, res) => {
 });
 //Rutas de usuarios
 app.use("/api/v1/users", RoutesUsers);
+//Rutas de productos
+app.use("/api/v1/products", RoutesProducts);
 
 export default app;
