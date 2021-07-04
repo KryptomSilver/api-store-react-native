@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import RoutesUsers from "./routes/users.routes";
+import RoutesAuth from "./routes/auth.routes";
 
 //--- Setings ---
 //Crear servidor con express
@@ -27,5 +28,7 @@ app.get("/", (req, res) => {
 });
 //Rutas de usuarios
 app.use("/api/v1/users", RoutesUsers);
+//Rutas de autenticación
+app.use("/api/v1/auth", RoutesAuth);
 
 export default app;

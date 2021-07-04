@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as UserCtrl from "../controllers/users.controller";
 import { check } from "express-validator";
+import auth from "../middlewares/auth";
 
 //Declarar el router
 const router = Router();
@@ -21,16 +22,15 @@ router.post(
 //Actualizar usuario
 router.put(
     "/:id",
-    [
-        check("email", "El correo es invalido").isEmail(),
-    ],
+    [check("email", "El correo es invalido").isEmail()],
+    auth,
     UserCtrl.updateUser
 );
 //Eliminar usuario
-router.delete("/:id", UserCtrl.deleteUser);
+router.delete("/:id", auth, UserCtrl.deleteUser);
 //Obtener usuario
-router.get("/:id", UserCtrl.getUser);
+router.get("/:id", auth, UserCtrl.getUser);
 //Obtener usuarios
-router.get("/", UserCtrl.getUsers);
+router.get("/", auth, UserCtrl.getUsers);
 
 export default router;
