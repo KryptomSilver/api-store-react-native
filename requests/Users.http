@@ -19,6 +19,7 @@ Content-Type: application/json
 PUT http://{{host}}/api/v1/users/60e0a7c9dc78212eec28a22d
 Content-Type: application/json
 x-auth-token: {{token}}
+
 {
     "name": "",
     "username": "",

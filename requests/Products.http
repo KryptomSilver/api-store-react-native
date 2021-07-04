@@ -1,3 +1,4 @@
+@token=tu token
 @hostname=localhost
 @port=4000
 @host={{hostname}}:{{port}}
@@ -5,6 +6,7 @@
 ### Crear Producto
 POST http://{{host}}/api/v1/products
 Content-Type: application/json
+x-auth-token: {{token}}
 
 {
     "nameProduct": "Fijador de Maquillaje",
@@ -15,6 +17,7 @@ Content-Type: application/json
 ###Actualizar Producto
 PUT http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
 Content-Type: application/json
+x-auth-token: {{token}}
 
 {
     "nameProduct": "Fijador de Maquillaje",
@@ -24,9 +27,12 @@ Content-Type: application/json
 
 ### Eliminar Producto
 DELETE http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
+x-auth-token: {{token}}
 
 ### Obtener producto
 GET  http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
+x-auth-token: {{token}}
 
 ### Obtener Productos
 GET  http://{{host}}/api/v1/products?page=0&size=5
+x-auth-token: {{token}}
