@@ -8,7 +8,7 @@
 - Extension  VS code ( REST CLIENT )
 
 # Config:
-## Node Js
+### Node Js
 You need to install [Node JS](https://nodejs.org/) and also check if you have also installed npm with next command:
 ```bash
 npm --version
@@ -22,13 +22,13 @@ Now we will install the @babel/node package globally:
 npm i -g @babel/node
 ```
 
-## Mongo DB
+### Mongo DB
 Install Mongo DB in [here](https://www.mongodb.com/try/download/community).
 
-## Extension vscode (REST CLIENT) 
+### Extension vscode (REST CLIENT) 
 Download extension [here](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
 
-## Create environment variables (.env)
+### Create environment variables (.env)
 Create a file in the proyect folder with named .env using file called .ENV-EXAMPLE
 - Example:
 ```.env
