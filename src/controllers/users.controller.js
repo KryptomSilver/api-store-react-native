@@ -1,4 +1,6 @@
 import User from "../models/User";
+import bcryptjs from "bcryptjs";
+import jwt from 'jsonwebtoken'
 import { validationResult } from "express-validator";
 import { getPagination } from "../libs/getPagination";
 
@@ -11,12 +13,38 @@ export const createUser = async (req, res) => {
     }
     try {
         const { body } = req;
+        const { email,password } = body;
+        // Revisar que el usuario registrado sea unico
+        const user = await User.findOne({ email });
+        if (user) {
+            return res.status(400).json({ msg: "El usuario ya existe" });
+        }
         //Crear el objeto usuario
         const newUser = new User(body);
+        // Hashear el password
+        const salt = await bcryptjs.genSalt(10);
+        newUser.password = await bcryptjs.hash(password, salt);
         //Guardar en la db
         await newUser.save();
-        //Enviar respuesta de confirmación
-        res.status(201).json({ msg: "Usuario creado" });
+        // Crear y firmar el JWT
+        const payload = {
+            newUser: {
+                id: newUser.id,
+            },
+        };
+        // firmar el JWT
+        jwt.sign(
+            payload,
+            process.env.SECRETA,
+            {
+                expiresIn: 86400, // 1 día
+            },
+            (error, token) => {
+                if (error) throw error;
+                //Enviar respuesta de confirmación
+                res.status(201).json({ msg: "Usuario creado", token });
+            }
+        );
     } catch (error) {
         res.status(500).json({
             message: error.message || "Algo salió mal...",

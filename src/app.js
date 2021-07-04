@@ -1,11 +1,15 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import dotenv from "dotenv";
 import RoutesUsers from "./routes/users.routes";
 import RoutesProducts from "./routes/products.routes";
+import RoutesAuth from "./routes/auth.routes";
 //--- Setings ---
 //Crear servidor con express
 const app = express();
+//Agregar reconocimiento de variables de entorno
+dotenv.config();
 //Declarar variable para el puerto del servidor(3000)
 app.set("port", process.env.PORT || 4000);
 
@@ -29,5 +33,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", RoutesUsers);
 //Rutas de productos
 app.use("/api/v1/products", RoutesProducts);
+//Rutas de autenticación
+app.use("/api/v1/auth", RoutesAuth);
 
 export default app;

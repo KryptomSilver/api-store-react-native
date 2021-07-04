@@ -1,3 +1,4 @@
+@token=tu token
 @hostname=localhost
 @port=4000
 @host={{hostname}}:{{port}}
@@ -7,30 +8,33 @@ POST http://{{host}}/api/v1/users
 Content-Type: application/json
 
 {
-    "name": "Abel Romero Ruiz",
-    "username": "abel",
-    "email":"abel@gmail.com",
-    "password": "123456",
-    "address": "Av. pablo silva gacia"
+    "name": "",
+    "username": "",
+    "email":"",
+    "password": "",
+    "address": ""
 }
 
 ###Actualizar usario
 PUT http://{{host}}/api/v1/users/60e0a7c9dc78212eec28a22d
 Content-Type: application/json
-
+x-auth-token: {{token}}
 {
-    "name": "Abel Ruiz",
-    "username": "abel",
-    "email":"abel@gmail.com",
-    "password": "123456",
-    "address": "Av. pablo silva gacia"
+    "name": "",
+    "username": "",
+    "email":"",
+    "password": "",
+    "address": ""
 }
 
 ### Eliminar usuario
 DELETE http://{{host}}/api/v1/users/60e0a5d270da092ba49ff4d7
+x-auth-token: {{token}}
 
 ### Obtener usario
 GET  http://{{host}}/api/v1/users/60e0a5d270da092ba49ff4d7
+x-auth-token: {{token}}
 
 ### Obtener usuarios
 GET  http://{{host}}/api/v1/users?page=0&size=5
+x-auth-token: {{token}}
