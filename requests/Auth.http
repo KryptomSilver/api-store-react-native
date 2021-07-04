@@ -1,0 +1,17 @@
+@token=tu token
+@hostname=localhost
+@port=4000
+@host={{hostname}}:{{port}}
+
+###Obtener usuario por token
+GET http://{{host}}/api/v1/auth
+x-auth-token: {{token}}
+
+###Iniciar sesión
+POST  http://{{host}}/api/v1/auth
+Content-Type: application/json
+
+{
+    "email": "",
+    "password": ""
+}
