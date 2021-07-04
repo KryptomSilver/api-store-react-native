@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 import RoutesUsers from "./routes/users.routes";
+import RoutesProducts from "./routes/products.routes";
 import RoutesAuth from "./routes/auth.routes";
 //--- Setings ---
 //Crear servidor con express
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 });
 //Rutas de usuarios
 app.use("/api/v1/users", RoutesUsers);
+//Rutas de productos
+app.use("/api/v1/products", RoutesProducts);
 //Rutas de autenticación
 app.use("/api/v1/auth", RoutesAuth);
 

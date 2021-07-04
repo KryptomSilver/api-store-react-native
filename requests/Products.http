@@ -1,0 +1,32 @@
+@hostname=localhost
+@port=4000
+@host={{hostname}}:{{port}}
+
+### Crear Producto
+POST http://{{host}}/api/v1/products
+Content-Type: application/json
+
+{
+    "nameProduct": "Fijador de Maquillaje",
+    "description": "Dale una mejor durabilidad a tu maquillaje hasta por 24 horas con el fijador de maquillaje",
+    "precioProduct":50    
+}
+
+###Actualizar Producto
+PUT http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
+Content-Type: application/json
+
+{
+    "nameProduct": "Fijador de Maquillaje",
+    "description": "Dale una mejor durabilidad a tu maquillaje hasta por 24 horas con el fijador de maquillaje",
+    "precioProduct":80  
+}
+
+### Eliminar Producto
+DELETE http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
+
+### Obtener producto
+GET  http://{{host}}/api/v1/products/60e0df45726ab712749ee6ed
+
+### Obtener Productos
+GET  http://{{host}}/api/v1/products?page=0&size=5
