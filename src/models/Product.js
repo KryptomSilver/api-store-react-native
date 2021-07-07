@@ -20,6 +20,9 @@ const productSchema = new Schema(
       required: true,
       trim: true,
     },
+    idPhoto:{ 
+        type: Schema.ObjectId, ref: "Photo" 
+    },
   },
   {
     timestamps: true,
