@@ -1,7 +1,9 @@
 import Product from "../models/Product";
 import { validationResult } from "express-validator";
 import { getPagination } from "../libs/getPagination";
-
+import cloudinary from "cloudinary";
+import Photo from "../models/Photo";
+import fs from "fs-extra";
 //Crear Producto
 export const createProduct = async (req, res) => {
     // revisar si hay errores
@@ -11,10 +13,31 @@ export const createProduct = async (req, res) => {
     }
     try {
         const { body } = req;
+        const {
+            title,
+            descriptionPhoto,
+            nameProduct,
+            description,
+            precioProduct,
+        } = body;
+        const result = await cloudinary.v2.uploader.upload(req.file.path);
+        const newPhoto = new Photo({
+            title,
+            descriptionPhoto,
+            imageUrl: result.url,
+            publicId: result.public_id,
+        });
         //Crear el objeto producto
-        const newProduct = new Product(body);
+        const newProduct = new Product({
+            nameProduct,
+            description,
+            precioProduct,
+        });
+        newProduct.idPhoto = newPhoto._id;
         //Guardar en la db
         await newProduct.save();
+        await newPhoto.save();
+        await fs.unlink(req.file.path);
         //Enviar respuesta de confirmación
         res.status(201).json({ msg: "Producto creado" });
     } catch (error) {
@@ -67,6 +90,8 @@ export const deleteProduct = async (req, res) => {
         if (!product) {
             return res.status(404).json({ msg: "No existe el Producto " });
         }
+        //Eliminar photo
+        await Photo.findByIdAndDelete(product.idPhoto);
         //Eliminar el usuario
         await Product.findByIdAndDelete(id);
         //Enviar respuesta de confirmación
@@ -86,7 +111,9 @@ export const getProduct = async (req, res) => {
             return res.status(400).json({ message: "El id no es valido" });
         }
         //Buscar en la db si existe el id
-        const product = await Product.findById(id);
+        const product = await Product.findById(id).populate({
+            path: "idPhoto",
+        });
         //Comprobar la busqueda
         if (!product) {
             return res.status(404).json({ msg: "No existe el Producto" });
@@ -102,11 +129,10 @@ export const getProduct = async (req, res) => {
 //Obtener Productos
 export const getProducts = async (req, res) => {
     try {
-        //Obtenemos las paginas y el numero de registros por pagina
-        const { size, page } = req.query;
-        const { limit, offset } = getPagination(page, size);
-        //Obtenemos los Productos con paginación
-        const products = await Product.paginate({}, { offset, limit });
+        //Obtenemos los Productos
+        const products = await Product.find().populate({
+            path: "idPhoto",
+        });
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({

@@ -10,17 +10,23 @@ router.post(
     "/",
     [
         check("nameProduct", "El nombre es obligatorio").not().isEmpty(),
-        check("description", "La descripcion del producto es obligatoria").not().isEmpty(),
-        check("precioProduct", "El precio del producto es obligatorio").not().isEmpty(),
-        check("precioProduct", "El precio deben ser caracteres numericos").isNumeric(),
-       
+        check("description", "La descripcion del producto es obligatoria")
+            .not()
+            .isEmpty(),
+        check("precioProduct", "El precio del producto es obligatorio")
+            .not()
+            .isEmpty(),
+        check(
+            "precioProduct",
+            "El precio deben ser caracteres numericos"
+        ).isNumeric(),
+        check("title", "El titulo de la imagen es requerida").not().isEmpty(),
+        check("descriptionPhoto","La descripción de la imagen es requerida")
     ],
     ProductCtrl.createProduct
 );
 //Actualizar Producto
-router.put(
-    "/:id",ProductCtrl.updateProduct
-);
+router.put("/:id", ProductCtrl.updateProduct);
 //Eliminar Producto
 router.delete("/:id", ProductCtrl.deleteProduct);
 //Obtener Producto

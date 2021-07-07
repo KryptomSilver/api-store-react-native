@@ -5,6 +5,10 @@ import dotenv from "dotenv";
 import RoutesUsers from "./routes/users.routes";
 import RoutesProducts from "./routes/products.routes";
 import RoutesAuth from "./routes/auth.routes";
+import multer from "multer";
+import path from "path";
+import cloudinary from "cloudinary";
+
 //--- Setings ---
 //Crear servidor con express
 const app = express();
@@ -24,7 +28,20 @@ app.use(morgan("dev"));
 app.use(express.json());
 //Permitir que la aplicacion entienda formularios html
 app.use(express.urlencoded({ extended: false }));
+//Imagenes
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, "public/uploads"),
+    filename: (req, file, cb) => {
+        cb(null, new Date().getTime() + path.extname(file.originalname));
+    },
+});
+app.use(multer({ storage }).single("image"));
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 //--- Routs ---
 app.get("/", (req, res) => {
     res.json({ message: "Bienvenido a la API de store" });
